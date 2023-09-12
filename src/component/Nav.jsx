@@ -1,9 +1,9 @@
 import { Box, InputAdornment, TextField, Typography, useMediaQuery } from '@mui/material'
 import React, { createContext, useContext, useState } from 'react'
-import logo from "../src/assets/images/logo.png"
+import logo from "../../src/assets/images/logo.png"
 import SearchIcon from "@mui/icons-material/Search";
 import axios from 'axios';
-import { UserContext } from './App';
+import { UserContext } from '../App';
 
 function Nav() {
   let{country,onSearch,onSubmit,keyenter}=useContext(UserContext)
@@ -11,7 +11,8 @@ function Nav() {
   
   return (
     <>
-    <Box sx={{position: "absolute",
+    <Box sx={{boxSizing:"border-box",
+    padding:"10px",
     width: "100%",
     height: "10%",
     display: "flex",

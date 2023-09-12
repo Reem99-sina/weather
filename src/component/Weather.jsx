@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 // import { styled } from '@mui/system';
-import moring from "../src/assets/images/moring.jpeg"
-import night from "../src/assets/images/night.jpg"
+import moring from "../../src/assets/images/moringimage.jpg"
+import night from "../../src/assets/images/nightimage.jpeg"
 import { Alert, Box, Grid, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 
-function Weather({ error, response }) {
+function Weather({ error, response,nav }) {
   const currentTime = new Date();
   const currentHour = currentTime.getHours();
+  let[feh,setfeh]=useState(null)
   const degree=useRef(null)
   const d = new Date;
   const dayWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -15,7 +16,7 @@ function Weather({ error, response }) {
   const MorningBackground = styled(Box)({
     backgroundImage: currentHour >= 6 && currentHour < 18 ? `url(${moring})` : `url(${night})`,
     width: "100%",
-    height: "100vh",
+    height:"100vh",
     backgroundSize: 'cover',
     display: "flex",
     justifyContent: "space-between",
@@ -25,8 +26,12 @@ function Weather({ error, response }) {
   const NightBackground = styled("Box")({
     backgroundImage: night,
   });
-  function ConvertFahrenheit(value){
-    degree.current.innerText=value
+  function ConvertFahrenheit(value,valuefeh){
+    if(value==feh){
+      setfeh(null)
+    }else{
+      setfeh(value)
+    }
   }
   useEffect(() => {
 
@@ -37,9 +42,9 @@ function Weather({ error, response }) {
     // }
   }, [error, response])
   return (<>
-    
+    {nav}
       <MorningBackground>
-      {response && <Grid container sx={{height:"73vh",alignItems:"center"}}>
+      {response && <Grid container sx={{alignItems:"center", height:"100%",backgroundImage: currentHour >= 6 && currentHour < 18 ? `url(${moring})` : `url(${night})`,}}>
         {response.forecast?.forecastday.map((ele,index) => {
         return  <Grid key={index} item lg={3.7} md={5} sm={12}xs={12} sx={{backgroundColor: "#1e202b",
           color: "white",
@@ -58,19 +63,23 @@ function Weather({ error, response }) {
               <Typography component={"p"}>
                 {response.location?.name}
               </Typography>
-              <Typography component={"p"} ref={degree}>
+              <Typography component={"p"} >
                max temp in celsius {ele.day.maxtemp_c} c
               </Typography>
-              <Typography component={"p"} ref={degree}>
-               max temp in fahrenheit {ele.day.maxtemp_f} f
-              </Typography>
+           
+              
               <Typography component={"p"}>
               min temp in celsius   {ele.day.mintemp_c} c
               </Typography>
-              <Typography component={"p"} ref={degree}>
-               min temp in fahrenheit {ele.day.mintemp_f} f
-              </Typography>
               
+              <Typography component={"button"} onClick={()=>ConvertFahrenheit(index,ele.day.maxtemp_f)}>
+                convet to fahrenheit
+              </Typography>
+              {index==feh?<><Typography component={"p"} >
+               max temp in fahrenheit {ele.day.maxtemp_f} f
+              </Typography><Typography component={"p"}>
+               min temp in fahrenheit {ele.day.mintemp_f} f
+              </Typography></>:""}
             </Typography>
             <Stack direction={"row"} justifyContent={"space-around"} alignItems={"center"}>
             <Typography component={"img"} src={ele.day.condition.icon}>

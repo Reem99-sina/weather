@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import Weather from './Weather.jsx';
-import Nav from './Nav';
+import Weather from './component/Weather.jsx';
+import Nav from './component/Nav';
 import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Alert } from '@mui/material';
@@ -16,12 +16,12 @@ function App() {
   }
  async function onSubmit(){
     // setcountry(e.target.value)
-    await axios.get(`https://api.weatherapi.com/v1/forecast.json?key=1d6b0a2b2c24425f807123243221501&q=${country}&days=3`).then((res)=>
+    await axios.get(`http://api.weatherapi.com/v1/forecast.json?key=1d6b0a2b2c24425f807123243221501&q=${country}&days=3&aqi=yes&alerts=yes`).then((res)=>
    { setresult(res.data)
     seterror(null)
     }
     ).catch((err)=>{
-      seterror(err.response.data.error.message==="Parameter q is missing."?"add country name to get weather":err.response?.data?.error?.message)
+      seterror(err.response?.data.error.message==="Parameter q is missing."?"add country name to get weather":err.response.data.error.message)
       setresult(null)
     })
   }
@@ -31,8 +31,8 @@ if (e.key){
 }
 }
   return (<UserContext.Provider value={{country,onSearch,onSubmit,keyenter}}>
-      <Nav/>
-      <Weather error={error}response={result}/>
+    
+      <Weather error={error}response={result} nav={<Nav/>}/>
     </UserContext.Provider>
   );
 }
