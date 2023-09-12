@@ -17,7 +17,7 @@ function Weather({ error, response,nav }) {
   const MorningBackground = styled(Box)({
     backgroundImage: currentHour >= 6 && currentHour < 18 ? `url(${moring})` : `url(${night})`,
     width: "100%",
-    height:matches&&error!=="add country name to get weather"?"unset":"100vh",
+    height:response?.forecast?.forecastday&&matches?"unset":"100vh",
     backgroundSize: 'cover',
     display: "flex",
     justifyContent: "space-between",
