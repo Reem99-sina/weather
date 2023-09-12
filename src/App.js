@@ -16,7 +16,7 @@ function App() {
   }
  async function onSubmit(){
     // setcountry(e.target.value)
-    await axios.get(`http://api.weatherapi.com/v1/forecast.json?key=1d6b0a2b2c24425f807123243221501&q=${country}&days=3&aqi=yes&alerts=yes`).then((res)=>
+    await axios.get(`https://api.weatherapi.com/v1/forecast.json?key=1d6b0a2b2c24425f807123243221501&q=${country}&days=3`).then((res)=>
    { setresult(res.data)
     seterror(null)
     }
