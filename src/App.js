@@ -31,7 +31,7 @@ if (e.key){
 }
 }
   return (<UserContext.Provider value={{country,onSearch,onSubmit,keyenter}}>
-    <Nav/>
+      <Nav/>
       <Weather error={error}response={result}/>
     </UserContext.Provider>
   );
