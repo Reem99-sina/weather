@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from 'react'
 // import { styled } from '@mui/system';
 import moring from "../../src/assets/images/moringimage.jpg"
 import night from "../../src/assets/images/nightimage.jpeg"
-import { Alert, Box, Grid, Stack, Typography } from '@mui/material';
+import { Alert, Box, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import { styled } from '@mui/system';
 
 function Weather({ error, response,nav }) {
   const currentTime = new Date();
   const currentHour = currentTime.getHours();
+  let matches=useMediaQuery('(max-width:900px)')
   let[feh,setfeh]=useState(null)
   const degree=useRef(null)
   const d = new Date;
@@ -16,7 +17,7 @@ function Weather({ error, response,nav }) {
   const MorningBackground = styled(Box)({
     backgroundImage: currentHour >= 6 && currentHour < 18 ? `url(${moring})` : `url(${night})`,
     width: "100%",
-    height:"100vh",
+    height:matches?"unset":"100vh",
     backgroundSize: 'cover',
     display: "flex",
     justifyContent: "space-between",
